@@ -27,6 +27,14 @@ public class UserService {
 	@Autowired
 	public ContentRepositorie contentRepositorie;
 	
+	public List<Content> getFavoritesByUserId(Long userId, String textFiltro) {
+		List<Content>  contents = new ArrayList<>();
+		
+		contents = favoriteRepositorie.findByUserIdWithFilter(userId, textFiltro);
+	
+		return contents;
+	}
+	
 	public List<Content> getFavoritesByUserId(Long userId) {
 		List<Content>  contents = new ArrayList<>();
 		

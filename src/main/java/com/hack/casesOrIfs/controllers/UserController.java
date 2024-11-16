@@ -3,14 +3,18 @@ package com.hack.casesOrIfs.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hack.casesOrIfs.dto.FavoriteFilterRequestDTO;
 import com.hack.casesOrIfs.dto.FavoriteRequestDTO;
 import com.hack.casesOrIfs.entities.Content;
 import com.hack.casesOrIfs.services.UserService;
@@ -21,6 +25,16 @@ public class UserController {
 	
 	@Autowired
 	public UserService userService;
+	
+	@PostMapping("/{userId}/favorited")
+	public ResponseEntity<List<Content>> getFavoritesByUserId(@PathVariable Long userId, @RequestBody FavoriteFilterRequestDTO favoriteRequest) {		
+		List<Content> contents = userService.getFavoritesByUserId(userId, favoriteRequest.getTextFiltro());
+		
+		if (contents.isEmpty()) return ResponseEntity.noContent().build();
+		
+		return ResponseEntity.ok(contents);
+	}
+	
 	
 	@GetMapping("/{userId}")
 	public ResponseEntity<List<Content>> getFavoritesByUserId(@PathVariable Long userId) {
@@ -36,4 +50,5 @@ public class UserController {
 		userService.putFavorited(favoriteRequest);
 		return ResponseEntity.ok().build();
 	}
+	
 }

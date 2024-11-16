@@ -23,9 +23,6 @@ public class Content {
 	private boolean futureJob;
 
 	@Column(nullable = true)
-	private boolean isFavorite = false;
-
-	@Column(nullable = true)
 	private Date favoriteDate;
 	
 	public Long getId() {
