@@ -1,11 +1,8 @@
 package com.hack.casesOrIfs.entities;
 
 import java.util.Date;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "content")
@@ -16,10 +13,19 @@ public class Content {
 	private Long id;
 	
 	private String name;
+
+	@Lob
 	private String resumen;
 	private String font;
 	private String link;
+
+	@Column(nullable = false)
 	private boolean futureJob;
+
+	@Column(nullable = true)
+	private boolean isFavorite = false;
+
+	@Column(nullable = true)
 	private Date favoriteDate;
 	
 	public Long getId() {
