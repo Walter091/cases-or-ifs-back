@@ -1,8 +1,9 @@
 package com.hack.casesOrIfs.services;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,21 +28,18 @@ public class UserService {
 	@Autowired
 	public ContentRepositorie contentRepositorie;
 	
-	public List<Content> getFavoritesByUserId(Long userId, String textFiltro) {
-		List<Content>  contents = new ArrayList<>();
+	public List<Content> getFavoritesByUserId(Long userId, String textFilter) {
+		if (textFilter != null && !textFilter.isBlank()) {
+			return favoriteRepositorie.findByUserIdWithFilter(userId, textFilter);
+		}
 		
-		contents = favoriteRepositorie.findByUserIdWithFilter(userId, textFiltro);
-	
-		return contents;
+		return getFavoritesByUserId(userId);
 	}
-	
+
 	public List<Content> getFavoritesByUserId(Long userId) {
-		List<Content>  contents = new ArrayList<>();
-		
-		List<UserFavorite> favorites = favoriteRepositorie.findByUserId(userId);
-		favorites.forEach(favorite -> contents.add(favorite.getContent()));
-	
-		return contents;
+	    return favoriteRepositorie.findByUserId(userId).stream()
+	    		.map(UserFavorite::getContent)
+	    		.collect(Collectors.toUnmodifiableList());
 	}
 	
 	public void putFavorited(FavoriteRequestDTO favorite) {
@@ -58,4 +56,21 @@ public class UserService {
 
 		favoriteRepositorie.save(fav);	
 	}
+	
+	public boolean removeFavorite(Long userId, Long contentId) {
+        try {
+            Optional<UserFavorite> favorite = favoriteRepositorie.findByUserIdAndContentId(userId, contentId);
+            
+            if (!favorite.isPresent()) {
+                return false;
+            }
+
+            favoriteRepositorie.delete(favorite.get());
+            return true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

@@ -9,6 +9,6 @@ import com.hack.casesOrIfs.entities.Content;
 
 public interface ContentRepositorie extends JpaRepository<Content, Long> {
 	
-	@Query(value= "SELECT * FROM CONTENT where futureJob",nativeQuery = true)
+	@Query(value= "SELECT * FROM content WHERE future_job", nativeQuery = true)
 	List<Content> findAllFutureJobs();
 }

@@ -1,7 +1,5 @@
 package com.hack.casesOrIfs.entities;
 
-import java.util.Date;
-
 import jakarta.persistence.*;
 
 @Entity
@@ -19,11 +17,8 @@ public class Content {
 	private String font;
 	private String link;
 
-	@Column(nullable = false)
+	@Column(nullable = false, name = "future_job")
 	private boolean futureJob;
-
-	@Column(nullable = true)
-	private Date favoriteDate;
 	
 	public Long getId() {
 		return id;
@@ -70,14 +65,6 @@ public class Content {
 	
 	public void setFutureJob(boolean futureJob) {
 		this.futureJob = futureJob;
-	}
-	
-	public Date getFavoriteDate() {
-		return favoriteDate;
-	}
-	
-	public void setFavoriteDate(Date favoriteDate) {
-		this.favoriteDate = favoriteDate;
 	}
 
 }
