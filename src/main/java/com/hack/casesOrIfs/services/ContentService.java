@@ -16,4 +16,9 @@ public class ContentService {
 	public List<Content> getAllContents() {
 		return contentRepositorie.findAll();
 	}
+	
+	public List<Content> getAllFutureJobs() {
+		return contentRepositorie.findAllFutureJobs();
+	}
+
 }

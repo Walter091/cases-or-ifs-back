@@ -24,4 +24,14 @@ public class ContentController {
 		
 		return ResponseEntity.ok(contents);
 	}
+	
+	@GetMapping("/futureJobs")
+	public ResponseEntity<List<Content>> getAllFutureJobs() {
+		List<Content> contents = contentService.getAllFutureJobs();
+		
+		if (contents.isEmpty()) return ResponseEntity.noContent().build();
+		
+		return ResponseEntity.ok(contents);
+	}
+	
 }

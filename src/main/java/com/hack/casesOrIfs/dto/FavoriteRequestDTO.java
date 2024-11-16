@@ -19,4 +19,6 @@ public class FavoriteRequestDTO {
 	public void setContentId(Long contentId) {
 		this.contentId = contentId;
 	}
+
+	
 }
