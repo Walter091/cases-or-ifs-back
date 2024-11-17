@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "content")
+@SqlResultSetMapping(
+	    name = "ContentMapping",
+	    entities = @EntityResult(entityClass = Content.class))	
 public class Content {
 	
 	@Id
